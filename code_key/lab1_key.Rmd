@@ -31,7 +31,7 @@ In the setup chunk in your RMarkdown document, attach the following packages:
 *Note: you may need to install these packages if you don't already have them (recall: `install.packages("packagename")`) 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 library(tidyverse)
 library(here)
 library(sf)
@@ -122,11 +122,15 @@ ex_5 <- sf_trees %>%
 You need `sf` and `tmap` successfully attached to do this part. We'll convert lat/lon to spatial data (see that now there's a column called `geometry`), then we can use `geom_sf()` to plot. 
 
 **Step 1:** Convert the lat/lon to spatial points
+
+Use `st_as_sf()` to convert to spatial coordinates: 
+
 ```{r}
 blackwood_acacia_sp <- blackwood_acacia %>% 
   drop_na(longitude, latitude) %>% 
-  st_as_sf(coords = c("longitude","latitude"))
+  st_as_sf(coords = c("longitude","latitude")) # Convert to spatial coordinates
 
+# But we need to set the coordinate reference system (CRS) so it's compatible with the street map of San Francisco we'll use as a "base layer":
 st_crs(blackwood_acacia_sp) = 4326
 
 # Then we can use `geom_sf`!
@@ -158,7 +162,18 @@ ggplot() +
   geom_sf(data = blackwood_acacia_sp, 
           color = "red", 
           size = 0.5) +
-  theme_void()
+  theme_void() +
+  labs(title = "Blackwood acacias in San Francisco")
 ```
+
+### Now an interactive one! 
+
+```{r}
+tmap_mode("view")
+
+tm_shape(blackwood_acacia_sp) + 
+  tm_dots()
+```
+
 
 ## END Lab 1
