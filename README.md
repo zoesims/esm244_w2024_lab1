@@ -10,7 +10,10 @@ Prepared by: Allison Horst
 
 ### Objectives:
 
+- Fork, clone a repo from GitHub
+- Remind ourselves of reproducible workflows (R Projects, `here`, RMarkdown)
 - Review some data wrangling basics with `dplyr`
 - Introduce some new `dplyr` and `tidyr` functions
 - Convert lat/lon to spatial coordinates with `sf::st_as_sf`
 - Make static and interactive maps with `ggplot` and `tmap`
+- Stage, commit, push changes back to your copy of GitHub repo
