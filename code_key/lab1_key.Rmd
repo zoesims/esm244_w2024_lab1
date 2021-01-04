@@ -50,7 +50,7 @@ About the data: SF trees data are from the [SF Open Data Portal](https://data.sf
 
 Check out the data using exploratory functions (e.g. `View()`, `names()`, `summary()`, etc.). Remember that those probably do **not** belong in your .Rmd code chunks (if you don't need a record, you can either comment it out or put it in the Console).
 
-### Wrangling with `dplyr` review
+### Part 1: Wrangling & ggplot review
 
 **Example 1:** Find counts of observations by `legal_status` & wrangle a bit:
 ```{r}
@@ -117,7 +117,9 @@ ex_5 <- sf_trees %>%
   unite("id_status", tree_id:legal_status, sep = "_COOL_")
 ```
 
-### Let's make a functional map! 
+#### Stage, commit, pull, push to GitHub!
+
+### Part 2: Make some actual maps
 
 You need `sf` and `tmap` successfully attached to do this part. We'll convert lat/lon to spatial data (see that now there's a column called `geometry`), then we can use `geom_sf()` to plot. 
 
@@ -174,6 +176,10 @@ tmap_mode("view")
 tm_shape(blackwood_acacia_sp) + 
   tm_dots()
 ```
+
+### Wrap up: 
+
+Make sure you stage, commit, pull, then push back to GitHub. Done! 
 
 
 ## END Lab 1
