@@ -60,18 +60,18 @@ sf_trees %>%
   summarize(tree_count = n())
 
 # Way 2: Same thing (+ a few other dplyr functions)
-top_10_status <- sf_trees %>% 
+top_5_status <- sf_trees %>% 
   count(legal_status) %>% 
   drop_na(legal_status) %>% 
   rename(tree_count = n) %>% 
   relocate(tree_count) %>% 
-  top_n(tree_count, 10) %>% 
+  slice_max(tree_count, n = 5) %>% 
   arrange(-tree_count)
 ```
 
 Make a graph of top 10 from above: 
 ```{r}
-ggplot(data = top_10_status, aes(x = fct_reorder(legal_status, tree_count), y = tree_count)) +
+ggplot(data = top_5_status, aes(x = fct_reorder(legal_status, tree_count), y = tree_count)) +
   geom_col() +
   labs(y = "Tree count", x = "Legal Status") +
   coord_flip() +
