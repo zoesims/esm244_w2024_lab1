@@ -1,6 +1,6 @@
 ## ESM 244 Lab 1 Materials 
 
-Prepared by: Allison Horst
+Prepared by: Allison Horst and Casey O'Hara
 
 ### Data used: 
 
