@@ -1,6 +1,6 @@
 ---
 title: "Wrangling review and a few new things"
-author: "Allison Horst"
+author: "Allison Horst, Casey O'Hara"
 output: html_document
 ---
 
@@ -14,7 +14,7 @@ output: html_document
 
 ### Setup
 
-- **Fork** this repo from GitHub (allisonhorst/esm244-w2021-lab1)
+- **Fork** this repo from GitHub (oharac/esm244-w2021-lab1)
 - Clone to create a version controlled R project 
 - Create a new folder in the project called `lab_1_yourinitials` (e.g. mine will be `lab_1_ah`)
 - Within that folder, create a new RMarkdown document in which you'll complete this lab
@@ -99,6 +99,7 @@ blackwood_acacia <- sf_trees %>%
 ggplot(data = blackwood_acacia, aes(x = longitude, y = latitude)) + 
   geom_point()
 ```
+
 **Example 4:** Meet `tidyr::separate()`
 
 Separate the `species` column into two separate columns: `spp_scientific` and `spp_common`
