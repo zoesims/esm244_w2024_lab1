@@ -1,0 +1,16 @@
+---
+title: 'Lab 1: Wrangling Review'
+author: "Casey O'Hara"
+date: "2023-01-13"
+output: html_document
+---
+
+```{r setup, include=TRUE, echo = TRUE, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+library(tidyverse)
+library(here)
+library(sf)
+library(tmap)
+```
+
