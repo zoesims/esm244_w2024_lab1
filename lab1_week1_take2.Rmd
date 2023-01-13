@@ -14,3 +14,70 @@ library(sf)
 library(tmap)
 ```
 
+### Read in the trees data
+
+```{r}
+sf_trees <- read_csv(here('data', 'sf_trees', 'sf_trees.csv'))
+
+# summary(sf_trees)
+# names(sf_trees)
+
+sf_trees_status <- sf_trees %>%
+  group_by(legal_status) %>%
+  summarize(tree_count = n())
+
+top_5_status <- sf_trees %>%
+  group_by(legal_status) %>%
+  summarize(tree_count = n()) %>%
+  slice_max(tree_count, n = 5) %>%
+  arrange(-tree_count)
+
+```
+
+### Plot top 5 legal status
+
+```{r}
+ggplot(data = top_5_status, aes(x = fct_reorder(legal_status, tree_count), y = tree_count)) +
+  geom_col() +
+  labs(y = "Tree count", x = "Legal status") +
+  coord_flip() +
+  theme_minimal()
+```
+
+### Keep obs where legal status is "Permitted Site" and caretaker is "MTA"
+
+```{r}
+# sf_trees$legal_status %>% unique()
+permitted_mta <- sf_trees %>%
+  filter(legal_status == "Permitted Site" & caretaker == "MTA")
+```
+
+### Keep Blackwood acacia trees, keep only legal_status, date, latitude, longitude columns
+
+```{r}
+blackwood_acacia <- sf_trees %>%
+  filter(str_detect(species, "Blackwood Acacia")) %>%
+  select(legal_status, date, latitude, longitude)
+
+### make a plot of SF acacia
+ggplot(data = blackwood_acacia, aes(x = longitude, y = latitude)) +
+  geom_point()
+
+```
+
+### Use tidyr::separate() to separate one column into multiple, and tidyr::unite() to rejoin
+
+```{r}
+sf_trees_sep <- sf_trees %>%
+  separate(species, into = c('spp_scientific', 'spp_common'), sep = ' :: ')
+
+sf_trees_unite <- sf_trees %>%
+  unite("id_status", tree_id:species, sep = '_NEW_')
+```
+
+
+
+
+
+
+
