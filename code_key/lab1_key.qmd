@@ -15,16 +15,18 @@ execute:
 # Objectives
 
 -   Reminders of reproducible workflows
--   Review some data wrangling basics (dplyr & tidyr, group_by, summarize, filter, select)
--   Introduce a couple of new functions (separate, drop_na)
--   Remember ggplot?
+-   Review some data wrangling basics (`dplyr` & `tidyr`, `group_by`, `summarize`, `filter`, `select`)
+-   Introduce a couple of new functions (`separate`, `drop_na`)
+-   Remember `ggplot`?
 -   A map in R
 
 # Setup
 
--   **Fork** this repo from GitHub (oharac/esm244_w2024_lab1)
--   Clone to create a version controlled R project
--   Create a new Quarto document in the project called `lab_1_yourinitials` (e.g. mine will be `lab_1_cco`)
+-   Check in on installation and PAT - reminder that if you set it to expire in 30 days, don't freak out when it seems to stop working in a month!
+-   **Fork** this repo from GitHub (`oharac/esm244_w2024_lab1`) to create a version in your own user account
+-   **Clone** to create a version controlled R project on your local computer
+-   Create a new Quarto document in the project called `lab_1_<yourinitials>` (e.g. mine will be `lab_1_cco`)
+-   Adjust the yaml header for chunk options, code folding, table of contents
 
 # Attach packages
 
@@ -36,8 +38,6 @@ In the setup chunk in your RMarkdown document, attach the following packages:
 -   `tmap`
 
 \*Note: you may need to install these packages if you don't already have them (recall: `install.packages("packagename")`)
-
-Reset chunk options for this chunk!
 
 ```{r setup}
 library(tidyverse)
@@ -174,6 +174,8 @@ sfo_native_status <- sfo_trees_native %>%
 ```
 
 ## End part 1: Render this document!
+
+When rendering a Quarto or R Markdown, R will create a new, clean environment - none of the variables or packages in current memory will be in this new environment.  This ensures that the script is completely self-contained - to help ensure reproducibility.
 
 Then stage, commit, pull, push to GitHub!
 
