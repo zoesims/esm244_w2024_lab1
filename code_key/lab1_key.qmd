@@ -14,30 +14,31 @@ execute:
 
 # Objectives
 
-- Reminders of reproducible workflows
-- Review some data wrangling basics (dplyr & tidyr, group_by, summarize, filter, select)
-- Introduce a couple of new functions (separate, drop_na)
-- Remember ggplot?
-- A map in R
+-   Reminders of reproducible workflows
+-   Review some data wrangling basics (dplyr & tidyr, group_by, summarize, filter, select)
+-   Introduce a couple of new functions (separate, drop_na)
+-   Remember ggplot?
+-   A map in R
 
 # Setup
 
-- **Fork** this repo from GitHub (oharac/esm244_w2024_lab1)
-- Clone to create a version controlled R project 
-- Create a new Quarto document in the project called `lab_1_yourinitials` (e.g. mine will be `lab_1_cco`)
+-   **Fork** this repo from GitHub (oharac/esm244_w2024_lab1)
+-   Clone to create a version controlled R project
+-   Create a new Quarto document in the project called `lab_1_yourinitials` (e.g. mine will be `lab_1_cco`)
 
 # Attach packages
 
 In the setup chunk in your RMarkdown document, attach the following packages:
 
-  - `tidyverse`
-  - `here`
-  - `sf`
-  - `tmap`
+-   `tidyverse`
+-   `here`
+-   `sf`
+-   `tmap`
 
-*Note: you may need to install these packages if you don't already have them (recall: `install.packages("packagename")`) 
+\*Note: you may need to install these packages if you don't already have them (recall: `install.packages("packagename")`)
 
-Reset chunk options for this chunk! 
+Reset chunk options for this chunk!
+
 ```{r setup}
 library(tidyverse)
 library(here)
@@ -47,14 +48,14 @@ library(tmap)
 
 # Read in the data
 
-The data you'll use (to start) is within the `data/sfo_trees` subfolder. Use the `here` package to read in the `sfo_trees.csv` file. 
+The data you'll use (to start) is within the `data/sfo_trees` subfolder. Use the `here` package to read in the `sfo_trees.csv` file.
 
 ```{r}
 sfo_trees_df <- read_csv(here("data", "sfo_trees", "sfo_trees.csv")) %>%
   janitor::clean_names()
 ```
 
-About the data: SF trees data are from the [SF Open Data Portal](https://data.sfgov.org/City-Infrastructure/Street-Tree-List/tkzw-k3nq). See more information from Thomas Mock and TidyTuesday [here](https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-01-28).  Data updated 1/10/2024, with certain columns dropped to reduce file size.
+About the data: SF trees data are from the [SF Open Data Portal](https://data.sfgov.org/City-Infrastructure/Street-Tree-List/tkzw-k3nq). See more information from Thomas Mock and TidyTuesday [here](https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-01-28). Data updated 1/10/2024, with certain columns dropped to reduce file size.
 
 Check out the data using exploratory functions (e.g. `View()`, `names()`, `summary()`, etc.). Remember that those probably do **not** belong in your .Rmd code chunks (if you don't need a record, you can either comment it out or put it in the Console).
 
@@ -62,7 +63,7 @@ Check out the data using exploratory functions (e.g. `View()`, `names()`, `summa
 
 ## Example 1
 
-Find counts of observations by `legal_status`.  Then select the statuses with the five highest tree counts. 
+Find counts of observations by `legal_status`. Then select the statuses with the five highest tree counts.
 
 ### Pseudocode
 
@@ -86,7 +87,8 @@ top_5_status <- sfo_trees_df %>%
   arrange(-tree_count)
 ```
 
-Make a graph of top 5 from above (take time to try on your own first): 
+Make a graph of top 5 from above (take time to try on your own first):
+
 ```{r example 1b}
 ggplot(data = top_5_status, 
        aes(x = legal_status, 
@@ -97,7 +99,6 @@ ggplot(data = top_5_status,
   # coord_flip() + ### can also just swap x and y in the aes()
   theme_minimal() 
 ```
-
 
 ## Example 2
 
@@ -116,7 +117,7 @@ Here note the use of the *and* operator in the filter, and compare use of `%in%`
 
 ## Example 3
 
-Only keep observations of oak and pine trees, then only keep columns `species`, `legal_status`, `plant_date`, `latitude` and `longitude`.  Note which category each tree falls into, as column `type`.  Store as `oak_pine_df`.
+Only keep observations of oak and pine trees, then only keep columns `species`, `legal_status`, `plant_date`, `latitude` and `longitude`. Note which category each tree falls into, as column `type`. Store as `oak_pine_df`.
 
 ### Pseudocode
 
@@ -133,7 +134,7 @@ oak_pine_df <- sfo_trees_df %>%
   mutate(type = ifelse(str_detect(species, "Oak"), 'Oak', 'Pine'))
 ```
 
-Make a little graph of locations (note R doesn't know these are spatial yet).  Which trees are oaks vs pines?
+Make a little graph of locations (note R doesn't know these are spatial yet). Which trees are oaks vs pines?
 
 ```{r ex 3b}
 ggplot(data = oak_pine_df, aes(x = longitude, y = latitude, color = type)) + 
@@ -152,13 +153,13 @@ Load a list of CA native species.
 ca_native_df <- read_csv(here('data/sfo_trees/ca_native_spp.csv'))
 ```
 
-How can we compare the California native species to those in our SF trees data?  Add a column notes whether each tree is a CA native or not, and save as `sfo_trees_native` (include species info, legal status, plant date, and location).  Then, count how many native vs. non-native trees for each legal status category, and save as `sfo_native_status`.  Extension: include how many individual species in each category as well!
+How can we compare the California native species to those in our SF trees data? Add a column notes whether each tree is a CA native or not, and save as `sfo_trees_native` (include species info, legal status, plant date, and location). Then, count how many native vs. non-native trees for each legal status category, and save as `sfo_native_status`. Extension: include how many individual species in each category as well!
 
 ### Pseudocode
 
 ### Functional code
 
-Hint: query the `help` page for `?separate` before you try to write functional code! 
+Hint: query the `help` page for `?separate` before you try to write functional code!
 
 ```{r ex 4b}
 sfo_trees_native <- sfo_trees_df %>% 
@@ -172,21 +173,19 @@ sfo_native_status <- sfo_trees_native %>%
             n_species = n_distinct(spp_sci))
 ```
 
-
-# End part 1: Render this document!
+## End part 1: Render this document!
 
 Then stage, commit, pull, push to GitHub!
 
------
+------------------------------------------------------------------------
 
-
-# Part 2: Analysis and quickie maps 
+# Part 2: Analysis and quickie maps
 
 Considering only Coast Live Oak and Monterey Pine, have tree planting preferences changed over time?
 
 ## Wrangling
 
-Create a new dataframe that contains only Coast Live Oak and Monterey Pine observations (NOT all oaks and pines!), and include information on year and location.  Call this `oak_pine_year_df`.  
+Create a new dataframe that contains only Coast Live Oak and Monterey Pine observations (NOT all oaks and pines!), and include information on year and location. Call this `oak_pine_year_df`.
 
 Then, determine whether there is a difference in when the trees have been planted.
 
@@ -194,7 +193,7 @@ Then, determine whether there is a difference in when the trees have been plante
 
 ### Functional Code
 
-Note, here we need to use `lubridate::year()` to extract the year info from the `Date` info.  We will do a lot more with `Date`-formatted data when we look at time series!
+Note, here we need to use `lubridate::year()` to extract the year info from the `Date` info. We will do a lot more with `Date`-formatted data when we look at time series!
 
 ```{r part 2 analysis}
 
@@ -219,7 +218,7 @@ You need `sf` ("Simple Features" geometry package) and `tmap` successfully attac
 
 ### Step 1: Convert the lat/lon to spatial points
 
-Use `st_as_sf()` to convert to spatial coordinates (`_sf` suffix to remember that this is a simple features object; `sfo_` prefix here still means San Francisco!): 
+Use `st_as_sf()` to convert to spatial coordinates (`_sf` suffix to remember that this is a simple features object; `sfo_` prefix here still means San Francisco!):
 
 ```{r map of sf oaks and pines}
 oak_pine_sf <- oak_pine_year_df %>% 
@@ -237,11 +236,12 @@ ggplot(data = oak_pine_sf) +
   
 ```
 
-But that's not especially useful unless we have an actual map of SF to plot this on, right? 
+But that's not especially useful unless we have an actual map of SF to plot this on, right?
 
 ### Step 2: read in San Francisco road map
 
-Read in the SF shapefile (data/sfo_map/tl_2017_06075_roads.shp): 
+Read in the SF shapefile (data/sfo_map/tl_2017_06075_roads.shp):
+
 ```{r}
 sfo_map <- read_sf(here("data", "sfo_map", "tl_2017_06075_roads.shp"))
 
@@ -251,7 +251,8 @@ ggplot(data = sfo_map) +
   geom_sf()
 ```
 
-Now combine them: 
+Now combine them:
+
 ```{r}
 ggplot() +
   geom_sf(data = sfo_map,
@@ -264,7 +265,7 @@ ggplot() +
   labs(title = "Oaks and pines in San Francisco")
 ```
 
-### Step 3: Now make it interactive! 
+### Step 3: Now make it interactive!
 
 ```{r}
 tmap_mode("view")
@@ -273,9 +274,44 @@ tm_shape(oak_pine_sf) +
   tm_dots(col = 'spp_sci')
 ```
 
-# Wrap up part 2
+## Wrap up part 2
 
-Make sure you render, stage, commit, pull, then push back to GitHub. Done! 
+Make sure you render, stage, commit, pull, then push back to GitHub. Done!
 
+------------------------------------------------------------------------
 
-## END Lab 1
+# Post-Lab Practice
+
+Create a new repository in your GitHub account. Clone this into R Studio (no need to fork, it's already in your account).
+
+In this new repository, create a new Quarto document and set it up:
+
+-   Code folding (either `true` (fold, but hide it) or `show` (fold, but show it))
+-   Echo code to the document, but suppress warnings and messages
+
+Delete the template text, and create a new code chunk. Attach the `tidyverse` package. Attach the `gapminder` package (install it if you need to!).
+
+## Analysis part 1:
+
+* For each year, and for each continent, summarize the average per-capita GDP across all countries in the continent (hint: don't just average the country-level `gdpPercap` values!).
+    * Plot these in a scatter plot.  
+    * (Bonus, plot the country-level values as well, with a low alpha to fade them into the background)
+    * Redo your scatter plot, but with a log transform on the per-capita GDP (either transform in the dataframe using `mutate`, or on the plot using `scale_y_log10()`)
+
+## Analysis part 2:
+
+Based on the plots, choose either the log-transformed or non-transformed data for the next part.
+
+* On the original Gapminder data (not your summarized data), use linear regression to estimate the annual change in per capita GDP **OR** log(per capita GDP), accounting for continent.
+
+## Followup questions:
+
+* Write a sentence or two describing the trends you see in the plots.  Which model (log or not) did you choose and why?
+* Write a sentence or two to explain the coefficients on your linear model output, including statistical significance.  
+    * Which continent is the "reference" continent?
+    * What does the "year" coefficient represent? hint: this is trickier if you went with the log-transformed model!
+    * What do the coefficients on each continent represent?  Do these make intuitive sense?
+* Does a linear model seem like a good way to approach these data?  Why or why not?
+
+Render your Quarto document, and then stage, commit, and push back to your Github repository.  Make sure the updates are reflected online!
+
