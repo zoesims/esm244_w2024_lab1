@@ -175,7 +175,7 @@ sfo_native_status <- sfo_trees_native %>%
 
 ## End part 1: Render this document!
 
-When rendering a Quarto or R Markdown, R will create a new, clean environment - none of the variables or packages in current memory will be in this new environment.  This ensures that the script is completely self-contained - to help ensure reproducibility.
+When rendering a Quarto or R Markdown, R will create a new, clean environment - none of the variables or packages in current memory will be in this new environment. This ensures that the script is completely self-contained - to help ensure reproducibility.
 
 Then stage, commit, pull, push to GitHub!
 
@@ -295,25 +295,24 @@ Delete the template text, and create a new code chunk. Attach the `tidyverse` pa
 
 ## Analysis part 1:
 
-* For each year, and for each continent, summarize the average per-capita GDP across all countries in the continent (hint: don't just average the country-level `gdpPercap` values!).
-    * Plot these in a scatter plot.  
-    * (Bonus, plot the country-level values as well, with a low alpha to fade them into the background)
-    * Redo your scatter plot, but with a log transform on the per-capita GDP (either transform in the dataframe using `mutate`, or on the plot using `scale_y_log10()`)
+-   For each year, and for each continent, summarize the average per-capita GDP across all countries in the continent (hint: don't just average the country-level `gdpPercap` values!).
+    -   Plot these in a scatter plot.\
+    -   (Bonus, plot the country-level values as well, with a low alpha to fade them into the background)
+    -   Redo your scatter plot, but with a log transform on the per-capita GDP (either transform in the dataframe using `mutate`, or on the plot using `scale_y_log10()`)
 
 ## Analysis part 2:
 
 Based on the plots, choose either the log-transformed or non-transformed data for the next part.
 
-* On the original Gapminder data (not your summarized data), use linear regression to estimate the annual change in per capita GDP **OR** log(per capita GDP), accounting for continent.
+-   On the original Gapminder data (not your summarized data), use linear regression to estimate the annual change in per capita GDP **OR** log(per capita GDP), accounting for continent.
 
 ## Followup questions:
 
-* Write a sentence or two describing the trends you see in the plots.  Which model (log or not) did you choose and why?
-* Write a sentence or two to explain the coefficients on your linear model output, including statistical significance.  
-    * Which continent is the "reference" continent?
-    * What does the "year" coefficient represent? hint: this is trickier if you went with the log-transformed model!
-    * What do the coefficients on each continent represent?  Do these make intuitive sense?
-* Does a linear model seem like a good way to approach these data?  Why or why not?
+-   Write a sentence or two describing the trends you see in the plots. Which model (log or not) did you choose and why?
+-   Write a sentence or two to explain the coefficients on your linear model output, including statistical significance.
+    -   Which continent is the "reference" continent?
+    -   What does the "year" coefficient represent? hint: this is trickier if you went with the log-transformed model!
+    -   What do the coefficients on each continent represent? Do these make intuitive sense?
+-   Does a linear model seem like a good way to approach these data? Why or why not?
 
-Render your Quarto document, and then stage, commit, and push back to your Github repository.  Make sure the updates are reflected online!
-
+Render your Quarto document, and then stage, commit, and push back to your Github repository. Make sure the updates are reflected online!
